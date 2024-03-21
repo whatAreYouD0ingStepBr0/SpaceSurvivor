@@ -27,6 +27,13 @@ public class PlayerMovement : NetworkBehaviour {
 
     // Update is called once per frame
 
+    public override void OnNetworkSpawn()
+    {
+        float xPos = 2 * OwnerClientId;
+        transform.position = new Vector3(xPos, 0, 0);
+
+    }
+
     void Start()
     {
         audioData.GetComponent<AudioSource>();
