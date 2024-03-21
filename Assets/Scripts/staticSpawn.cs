@@ -5,83 +5,42 @@ using Unity.Netcode;
 
 public class staticSpawn : NetworkBehaviour
 {
-   [SerializeField]
-   private GameObject slimePrefab;
+    [SerializeField]
+    private GameObject slimePrefab;
+    public float slimeInterval = 6f;
 
-  [SerializeField]
-  //max enemy interval when spawning
-   public float slimeInterval;
+    private collectObjects playerScript; // Reference to the player's script
 
-
-
- 
- // Start is called before the first frame update
     void Start()
     {
-
-        slimeInterval = 6f;
-        //calls to start coroutine which spawns enemy
-
-        StartCoroutine(spawnEnemy(slimeInterval, slimePrefab));
-   
-
-
+        if (IsServer) // Ensure that only the server controls the spawning logic
+        {
+            playerScript = FindObjectOfType<collectObjects>(); // Ideally, replace this with a more reliable way to get the player script
+            if (playerScript != null)
+            {
+                StartCoroutine(SpawnEnemy(slimeInterval));
+            }
+            else
+            {
+                Debug.LogError("Player script not found. Ensure the player is spawned before enemies.");
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator SpawnEnemy(float interval)
     {
-       
-    }
-
-    private IEnumerator spawnEnemy(float interval, GameObject enemy){
-   
-yield return new WaitForSeconds(interval);
-        //I set the interval to lower if a gas tank is collected
-        // we reset back to the max interval to repeat process
-        //CHANGE MAX INTERVAL CHANGE THIS INTERVAL VALUE
-        interval = 6;
-    //endless spawn at spawner position
-    GameObject newEnemy = Instantiate(enemy, transform.position , Quaternion.identity);
-            //gets and compares gas collected from object player1 (our player current name) to reduce enemy spawn rate up to -5
-        if (GameObject.Find("player1").GetComponent<collectObjects>().gasCollected == 1) {
-            interval -= 1;
-            StartCoroutine(spawnEnemy(interval, enemy));
-           
-        } else if (GameObject.Find("player1").GetComponent<collectObjects>().gasCollected == 2) {
-            interval -= 2;
-            StartCoroutine(spawnEnemy(interval, enemy));
-           
-
-        }
-        else if (GameObject.Find("player1").GetComponent<collectObjects>().gasCollected == 3) {
-            interval -= 3;
-            StartCoroutine(spawnEnemy(interval, enemy));
-           
-
-
-        }
-        else if (GameObject.Find("player1").GetComponent<collectObjects>().gasCollected == 4)
+        while (true) // Changed to a loop for continuous spawning
         {
-            interval -= 4;
-            StartCoroutine(spawnEnemy(interval, enemy));
+            yield return new WaitForSeconds(interval);
+            
+            // Adjust spawn interval based on gas collected
+            float gasCollected = playerScript.gasCollected.Value; // Safe access to NetworkVariable
+            interval = 6 - Mathf.Clamp(gasCollected, 0, 5); // Ensure interval is adjusted correctly
+            
+            // Spawn the enemy
+            NetworkObject.Instantiate(slimePrefab, transform.position, Quaternion.identity);
 
-
-
-        }
-        else if (GameObject.Find("player1").GetComponent<collectObjects>().gasCollected ==5)
-        {
-            interval -= 5;
-            StartCoroutine(spawnEnemy(interval, enemy));
-
-
-
-        }
-        else
-        //normal start spawn rate when no gas is collected
-        {
-            StartCoroutine(spawnEnemy(interval, enemy));
+            // No need for repeated StartCoroutine calls; using a while loop instead
         }
     }
- 
 }
