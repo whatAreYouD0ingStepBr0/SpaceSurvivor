@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class Shooting : MonoBehaviour
+public class Shooting : NetworkBehaviour
 {
     public Transform firePoint;
     public GameObject bulletPrefab;
@@ -17,6 +18,8 @@ public class Shooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (!IsOwner) return;
         if(Input.GetButtonDown("Fire1"))
         {
             Shoot();
