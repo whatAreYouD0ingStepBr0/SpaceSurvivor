@@ -10,6 +10,7 @@ TagManager:
   - Ship
   - Bullet
   - Slime
+  - Cam
   layers:
   - Default
   - TransparentFX
