@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Unity.Netcode;
 using TMPro;
 using System;
 
-public class collectObjects : MonoBehaviour
+public class collectObjects : NetworkBehaviour
 {
         public SpriteRenderer changesSprite;
         public Sprite wingedShip;

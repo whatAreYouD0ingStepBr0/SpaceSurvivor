@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerMovement : MonoBehaviour {
+
+
+public class PlayerMovement : NetworkBehaviour {
     public const float MOVE_SPEED = 5f;
     bool canDash = true;
     bool canMove = true;
@@ -12,6 +15,8 @@ public class PlayerMovement : MonoBehaviour {
     float currentDashTime;
     float currentCooldown;
     public AudioSource audioData;
+
+    //private NetworkVariable<int> randomNumber = new NetworkVariable<int>(1);
 
 
     public Rigidbody2D rb;
@@ -27,6 +32,7 @@ public class PlayerMovement : MonoBehaviour {
         audioData.GetComponent<AudioSource>();
     }
     void Update() {
+        if (!IsOwner) return;
         moveDir.x = Input.GetAxisRaw("Horizontal");
         moveDir.y = Input.GetAxisRaw("Vertical");
 

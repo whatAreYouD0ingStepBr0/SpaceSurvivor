@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6782176724173141084}
   - component: {fileID: 6782176724173141085}
   - component: {fileID: 6782176724173141082}
+  - component: {fileID: 7318372639119348519}
   - component: {fileID: 6782176724173141086}
   - component: {fileID: 6782176724173141073}
   - component: {fileID: 6782176724173141072}
@@ -138,6 +139,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0152378, y: 1.2595673}
   m_EdgeRadius: 0
+--- !u!114 &7318372639119348519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6782176724173141083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3945892277
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!114 &6782176724173141086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +175,7 @@ MonoBehaviour:
   dashSpeed: 15
   dashTime: 1
   dashCooldown: 0.5
+  audioData: {fileID: 0}
   rb: {fileID: 6782176724173141085}
   cam: {fileID: 0}
 --- !u!114 &6782176724173141073
@@ -187,6 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 6782176724287003333}
   bulletPrefab: {fileID: 609366501676978755, guid: fdc978619169cb64a97cbfee8f427f56, type: 3}
+  audioData: {fileID: 0}
   bulletForce: 20
 --- !u!1 &6782176724287003330
 GameObject:

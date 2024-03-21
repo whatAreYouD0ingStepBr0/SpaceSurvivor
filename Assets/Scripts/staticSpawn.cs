@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class staticSpawn : MonoBehaviour
+public class staticSpawn : NetworkBehaviour
 {
    [SerializeField]
    private GameObject slimePrefab;
@@ -40,9 +41,9 @@ yield return new WaitForSeconds(interval);
         // we reset back to the max interval to repeat process
         //CHANGE MAX INTERVAL CHANGE THIS INTERVAL VALUE
         interval = 6;
-//endless spawn at spawner position
-GameObject newEnemy = Instantiate(enemy, transform.position ,Quaternion.identity);
-        //gets and compares gas collected from object player1 (our player current name) to reduce enemy spawn rate up to -5
+    //endless spawn at spawner position
+    GameObject newEnemy = Instantiate(enemy, transform.position , Quaternion.identity);
+            //gets and compares gas collected from object player1 (our player current name) to reduce enemy spawn rate up to -5
         if (GameObject.Find("player1").GetComponent<collectObjects>().gasCollected == 1) {
             interval -= 1;
             StartCoroutine(spawnEnemy(interval, enemy));
