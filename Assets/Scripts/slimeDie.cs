@@ -7,18 +7,25 @@ using Unity.Netcode;
 public class slimeDie : MonoBehaviour
 
 {
+    public AudioSource audioData;
 
+    void Start()
+    {
+        audioData = GetComponent<AudioSource>();
+    }
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag.Equals("Bullet"))
         {
             SlimeDieServerRpc();
+            audioData.Play();
             Destroy(gameObject);
         }
 
         if (col.gameObject.tag.Equals("Player"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Debug.LogError(" Player HIT! ");
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
     }
